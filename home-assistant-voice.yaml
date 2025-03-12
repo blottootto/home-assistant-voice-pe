@@ -918,32 +918,36 @@ sensor:
     pin_a: GPIO16
     pin_b: GPIO18
     resolution: 2
+        on_anticlockwise:
+      - homeassistant.service:
+          service: media_player.volume_up
+          data:
+            entity_id: media_player.sonos_kitchen_speaker
+      - logger.log: "Turned Clockwise"
+      - homeassistant.service:
+          service: media_player.volume_up
+          data:
+            entity_id: media_player.sonos_living_room_speaker
+      - homeassistant.service:
+          service: media_player.volume_up
+          data:
+            entity_id: media_player.sonos_family_room_speaker
+    
     on_clockwise:
-      - lambda: id(dial_touched) = true;
-      - if:
-          condition:
-            binary_sensor.is_off: center_button
-          then:
-            - script.execute:
-                id: control_volume
-                increase_volume: true
-          else:
-            - script.execute:
-                id: control_hue
-                increase_hue: true
-    on_anticlockwise:
-      - lambda: id(dial_touched) = true;
-      - if:
-          condition:
-            binary_sensor.is_off: center_button
-          then:
-            - script.execute:
-                id: control_volume
-                increase_volume: false
-          else:
-            - script.execute:
-                id: control_hue
-                increase_hue: false
+      - homeassistant.service:
+          service: media_player.volume_down
+          data:
+            entity_id: media_player.sonos_kitchen_speaker
+      - homeassistant.service:
+          service: media_player.volume_down
+          data:
+            entity_id: media_player.sonos_living_room_speaker
+
+      - homeassistant.service:
+          service: media_player.volume_down
+          data:
+            entity_id: media_player.sonos_family_room_speaker
+      - logger.log: "Turned Counter Clockwise"
 
 event:
   # Event entity exposed to the user to automate on complex center button presses.
