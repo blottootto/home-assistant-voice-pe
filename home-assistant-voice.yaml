@@ -918,7 +918,7 @@ sensor:
     pin_a: GPIO16
     pin_b: GPIO18
     resolution: 2
-    on_anticlockwise:
+    on_clockwise:
       - homeassistant.service:
           service: media_player.volume_up
           data:
@@ -933,7 +933,7 @@ sensor:
           data:
             entity_id: media_player.sonos_family_room_speaker
     
-    on_clockwise:
+    on_anticlockwise:
       - homeassistant.service:
           service: media_player.volume_down
           data:
